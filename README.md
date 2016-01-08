@@ -2,7 +2,6 @@
 
 Configuración personalizada de vim. Contiene:
 
-+ Vim airline
 + Vim fugitive 
 + Vim gitgutter
 + PowerlineSimbols
@@ -14,6 +13,17 @@ Es necesario descargar la versión de este repositorio. Una vez descargado, es n
 
 ```bash
 $ ~/
+```
+Seguido de ello, es necesario instalar vim-airline:
+
+```bash
+$ git clone https://github.com/bling/vim-airline ~/.vim/bundle/vim-airline 
+```
+
+Una vez instalado vim-airline, debemos mover el archivo 'hatzel.vim' dentro de la carpeta de temas:
+
+```bash
+$ mv hatzel.vim ~/.vim/bundle/vim-airline/autoload/airline/themes/hatzel.vim 
 ```
 
 ## CLI powerline ##
