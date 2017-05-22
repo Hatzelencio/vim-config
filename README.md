@@ -33,3 +33,9 @@ Para agregar powerline sólo es necesario ejecutar la siguiente linea:
 ```bash
 $ echo "[ -f .shell_prompt.sh ] && source .shell_prompt.sh" >> ~/.bashrc
 ```
+
+------
+
+## Problemas con osx
+
+Posiblemente los símbolos de powerline no funciones con iterm2. Para ello hay que instalar las fuentes adecuadas del siguiente [enlace](https://gist.github.com/kevin-smets/8568070)
