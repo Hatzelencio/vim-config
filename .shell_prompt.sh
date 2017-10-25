@@ -28,7 +28,8 @@ function __promptline_ps1 {
   slice_prefix="${b_bg}${sep}${b_fg}${b_bg}${space}" slice_suffix="$space${b_sep_fg}" slice_joiner="${b_fg}${b_bg}${alt_sep}${space}" slice_empty_prefix="${b_fg}${b_bg}${space}"
   [ $is_prompt_empty -eq 1 ] && slice_prefix="$slice_empty_prefix"
   # section "b" slices
-  __promptline_wrapper "$USER" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
+  local name="Hatzel "
+  __promptline_wrapper "$name" "$slice_prefix" "$slice_suffix" && { slice_prefix="$slice_joiner"; is_prompt_empty=0; }
 
   # section "c" header
   slice_prefix="${c_bg}${sep}${c_fg}${c_bg}${space}" slice_suffix="$space${c_sep_fg}" slice_joiner="${c_fg}${c_bg}${alt_sep}${space}" slice_empty_prefix="${c_fg}${c_bg}${space}"
@@ -74,26 +75,34 @@ function __promptline_cwd {
   local dir_sep="  "
   local tilde="~"
 
-  local cwd="${PWD/#$HOME/$tilde}"
+  # local cwd="${PWD/#$HOME/$tilde}"
+  local pathdirectory="~"
+
+  if [ "${PWD}" != "${HOME}" ]; then
+      pathdirectory="${PWD##*/}"
+  fi
+  echo $pathdirectory
+  #echo "${PWD##*/}"
+  #printf "%s" "${cwd}"
 
   # get first char of the path, i.e. tilde or slash
-  [[ -n ${ZSH_VERSION-} ]] && first_char=$cwd[1,1] || first_char=${cwd::1}
+  #[[ -n ${ZSH_VERSION-} ]] && first_char=$cwd[1,1] || first_char=${cwd::1}
 
-  # remove leading tilde
-  cwd="${cwd#\~}"
+  ## remove leading tilde
+  #cwd="${cwd#\~}"
 
-  while [[ "$cwd" == */* && "$cwd" != "/" ]]; do
-    # pop off last part of cwd
-    local part="${cwd##*/}"
-    cwd="${cwd%/*}"
+  #while [[ "$cwd" == */* && "$cwd" != "/" ]]; do
+  #  # pop off last part of cwd
+  #  local part="${cwd##*/}"
+  #  cwd="${cwd%/*}"
 
-    formatted_cwd="$dir_sep$part$formatted_cwd"
-    part_count=$((part_count+1))
+  #  formatted_cwd="$dir_sep$part$formatted_cwd"
+  #  part_count=$((part_count+1))
 
-    [[ $part_count -eq $dir_limit ]] && first_char="$truncation" && break
-  done
+  #  [[ $part_count -eq $dir_limit ]] && first_char="$truncation" && break
+  #done
 
-  printf "%s" "$first_char$formatted_cwd"
+  #printf "%s" "$first_char$formatted_cwd"
 }
 function __promptline_left_prompt {
   local slice_prefix slice_empty_prefix slice_joiner slice_suffix is_prompt_empty=1
@@ -161,21 +170,27 @@ function __promptline {
   local alt_rsep=""
   local reset="${wrap}0${end_wrap}"
   local reset_bg="${wrap}49${end_wrap}"
-  local a_fg="${wrap}38;5;17${end_wrap}"
-  local a_bg="${wrap}48;5;190${end_wrap}"
-  local a_sep_fg="${wrap}38;5;190${end_wrap}"
-  local b_fg="${wrap}38;5;255${end_wrap}"
-  local b_bg="${wrap}48;5;238${end_wrap}"
-  local b_sep_fg="${wrap}38;5;238${end_wrap}"
-  local c_fg="${wrap}38;5;85${end_wrap}"
-  local c_bg="${wrap}48;5;234${end_wrap}"
-  local c_sep_fg="${wrap}38;5;234${end_wrap}"
-  local warn_fg="${wrap}38;5;232${end_wrap}"
-  local warn_bg="${wrap}48;5;166${end_wrap}"
-  local warn_sep_fg="${wrap}38;5;166${end_wrap}"
-  local y_fg="${wrap}38;5;255${end_wrap}"
-  local y_bg="${wrap}48;5;238${end_wrap}"
-  local y_sep_fg="${wrap}38;5;238${end_wrap}"
+
+  local a_fg="${wrap}38;5;252${end_wrap}"
+  local a_bg="${wrap}48;5;52${end_wrap}"
+  local a_sep_fg="${wrap}38;5;52${end_wrap}"
+
+  local b_fg="${wrap}38;5;252${end_wrap}"
+  local b_bg="${wrap}48;5;52${end_wrap}"
+  local b_sep_fg="${wrap}38;5;52${end_wrap}"
+
+  local c_fg="${wrap}38;5;67${end_wrap}"
+  local c_bg="${wrap}48;5;16${end_wrap}"
+  local c_sep_fg="${wrap}38;5;16${end_wrap}"
+
+  local warn_fg="${wrap}38;5;125${end_wrap}"
+  local warn_bg="${wrap}48;5;233${end_wrap}"
+  local warn_sep_fg="${wrap}38;5;233${end_wrap}"
+
+  local y_fg="${wrap}38;5;252${end_wrap}"
+  local y_bg="${wrap}48;5;236${end_wrap}"
+  local y_sep_fg="${wrap}38;5;236${end_wrap}"
+  
   if [[ -n ${ZSH_VERSION-} ]]; then
     PROMPT="$(__promptline_left_prompt)"
     RPROMPT="$(__promptline_right_prompt)"
